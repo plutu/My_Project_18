@@ -42,9 +42,9 @@ void setup() {
 
 void loop() {
 
-  Serial.println("Run dc motors");
-  // run all motors for 5s
-
+  Serial.println("forward");
+  // forwards!
+  
   motor1.run(FORWARD);
   motor2.run(FORWARD);
   motor3.run(FORWARD);
@@ -60,6 +60,36 @@ void loop() {
   motor2.setSpeed(0);
   motor3.setSpeed(0);
   motor4.setSpeed(0);
+  delay(1000);
+
+  //backwards!
+  Serial.println("reverse");
+  motor1.run(BACKWARD);
+  motor2.run(BACKWARD);
+  motor3.run(BACKWARD);
+  motor4.run(BACKWARD);
+
+  delay(5000);      
+  motor1.setSpeed(255);
+  motor2.setSpeed(255);
+  motor3.setSpeed(255);
+  motor4.setSpeed(255);
+  delay(5000);      
+  motor1.setSpeed(0);
+  motor2.setSpeed(0);
+  motor3.setSpeed(0);
+  motor4.setSpeed(0);
+  delay(1000);
+
+  //TURNING
+  Serial.println("turn");
+  motor1.run(FORWARD);
+  motor3.run(BACKWARD);
+  motor1.setSpeed(255);
+  motor3.setSpeed(255);
+  delay(5000);      
+  motor1.setSpeed(0);
+  motor3.setSpeed(0);
   delay(1000);
 
   //open and close door
