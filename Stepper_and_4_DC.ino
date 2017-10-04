@@ -17,7 +17,7 @@ AF_DCMotor motor4(4);
 #define pin3  13
 #define pin4  2
 
-#define delaytime 8   //delay time in ms to control the stepper motor delaytime.
+#define delaytime 10   //delay time in ms to control the stepper motor delaytime.
                       //Our tests showed that 8 is about the fastest that can yield reliable operation w/o missing steps
 
 
@@ -32,10 +32,10 @@ void setup() {
   pinMode(pin4, OUTPUT);
 
 // set dc motor speed
-  motor1.setSpeed(255);
+  /*motor1.setSpeed(255);
   motor2.setSpeed(255);
   motor3.setSpeed(255);
-  motor4.setSpeed(255);
+  motor4.setSpeed(255);*/
 
   
 }
@@ -46,40 +46,51 @@ void loop() {
   // forwards!
   
   motor1.run(FORWARD);
-  motor2.run(FORWARD);
   motor3.run(FORWARD);
-  motor4.run(FORWARD);
 
   delay(5000);      
   motor1.setSpeed(255);
-  motor2.setSpeed(255);
   motor3.setSpeed(255);
-  motor4.setSpeed(255);
   delay(5000);      
   motor1.setSpeed(0);
-  motor2.setSpeed(0);
   motor3.setSpeed(0);
-  motor4.setSpeed(0);
   delay(1000);
 
   //backwards!
   Serial.println("reverse");
   motor1.run(BACKWARD);
-  motor2.run(BACKWARD);
   motor3.run(BACKWARD);
-  motor4.run(BACKWARD);
 
   delay(5000);      
   motor1.setSpeed(255);
-  motor2.setSpeed(255);
   motor3.setSpeed(255);
-  motor4.setSpeed(255);
   delay(5000);      
   motor1.setSpeed(0);
-  motor2.setSpeed(0);
   motor3.setSpeed(0);
+  delay(1000);
+
+  //portward
+  motor2.run(FORWARD);
+  motor4.run(FORWARD);
+  delay(5000);      
+  motor2.setSpeed(255);
+  motor4.setSpeed(255);
+  delay(5000);      
+  motor2.setSpeed(0);
   motor4.setSpeed(0);
   delay(1000);
+
+  //starboard
+  motor2.run(BACKWARD);
+  motor4.run(BACKWARD);
+  delay(5000);      
+  motor2.setSpeed(255);
+  motor4.setSpeed(255);
+  delay(5000);      
+  motor2.setSpeed(0);
+  motor4.setSpeed(0);
+  delay(1000);
+
 
   //TURNING
   Serial.println("turn");
@@ -91,6 +102,7 @@ void loop() {
   motor1.setSpeed(0);
   motor3.setSpeed(0);
   delay(1000);
+
 
   //open and close door
   Serial.println("Stepper forward");
