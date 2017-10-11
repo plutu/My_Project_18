@@ -1,0 +1,3 @@
+Libraries to include:
+Adafruit v1 (with AFMotor.h)
+StepperArduinoKitLibrary (with StepperAK.h)
