@@ -12,7 +12,7 @@ void import_statements_etc(){
   AF_DCMotor motor4(4);
   
   #define pin1  9//these are the Arduino pins that we use to activate coils 1-4 of the stepper motor
-  #define pin2  10
+  #define pin2  10// eg pin1   9,   pin1 is the first coil on stepper, 9 is the Uno pin
   #define pin3  13
   #define pin4  2  
   #define delaytime 10   //delay time in ms to control the stepper motor delaytime.
