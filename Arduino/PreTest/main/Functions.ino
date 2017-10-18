@@ -39,7 +39,7 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
    *    runtime (ms)
    */ 
   motor1.setSpeed(motor_speed);//speed
-  motor2.setSpeed(motor_speedl);
+  motor2.setSpeed(motor_speed);
   motor1.run(dir);
   motor2.run(dir);
   delay(runtime);       // Yo whats this delay(runtime) doing? why we wanna do this?
@@ -53,8 +53,8 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
  */
  
 void dc_go(AF_DCMotor A, AF_DCMotor B, char dir){
-  A.setSpeed(255);
-  B.setSpeed(255);
+  A.setSpeed(motor_speed);
+  B.setSpeed(motor_speed);
   A.run(dir);
   B.run(dir);
 }
