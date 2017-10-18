@@ -38,8 +38,8 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
    *    dir (char): direction FORWARD or BACKWARD
    *    runtime (ms)
    */ 
-  motor1.setSpeed(100);//speed
-  motor2.setSpeed(100);
+  motor1.setSpeed(motor_speed);//speed
+  motor2.setSpeed(motor_speedl);
   motor1.run(dir);
   motor2.run(dir);
   delay(runtime);       // Yo whats this delay(runtime) doing? why we wanna do this?
@@ -113,6 +113,9 @@ bool is_mag (){
    *  Could end up being some sort of get_mag_distance()  Annie?   */
 }
 
+bool are_we_home(){
+  //true if we're at base, false if not
+}
 
 
 
