@@ -1,6 +1,31 @@
 /* Here we list all functions to be implemented in our code, 
  * with docstrings to explain what it does, what parameters it has and what it returns 
  */
+void import_statements_etc(){
+  //this goes in the top of the main function, before setup()
+  #include <StepperAK.h>
+  #include <AFMotor.h>
+
+  AF_DCMotor motor1(1);
+  AF_DCMotor motor2(2);
+  AF_DCMotor motor3(3);
+  AF_DCMotor motor4(4);
+  
+  #define pin1  9//these are the Arduino pins that we use to activate coils 1-4 of the stepper motor
+  #define pin2  10
+  #define pin3  13
+  #define pin4  2
+  
+  #define delaytime 10   //delay time in ms to control the stepper motor delaytime.
+                        //Our tests showed that 8 is about the fastest that can yield reliable operation w/o missing steps
+
+
+}
+
+//DC MOTORS
+/* Here we list all functions to be implemented in our code, 
+ * with docstrings to explain what it does, what parameters it has and what it returns 
+ */
 
 #include <StepperAK.h>
 #include <AFMotor.h>
@@ -13,8 +38,8 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
    *    dir (char): direction FORWARD or BACKWARD
    *    runtime (ms)
    */ 
-  motor1.setSpeed(255);
-  motor2.setSpeed(255);
+  motor1.setSpeed(100);//speed
+  motor2.setSpeed(100);
   motor1.run(dir);
   motor2.run(dir);
   delay(runtime);       // Yo whats this delay(runtime) doing? why we wanna do this?
@@ -50,10 +75,11 @@ void spin(AF_DCMotor motor1, AF_DCMotor motor2, int angle){
 }
 
 //STEPPER
-void step_open(int numberOfSteps){
+void step_open(){
   /* Opens the door. We need to experimentally calculate how many steps it takes to open/close the door
    * Once we have that, numberOfSteps could probably be stated in the function below, since it's always the same.
    */
+  int numberOfSteps = numberofstepstoopendoor;
   step_OFF();         //turning all coils off
   while(numberOfSteps>0){
     forward();        //going forward
@@ -61,11 +87,17 @@ void step_open(int numberOfSteps){
   }
 }
 
-void step_close(int numberOfSteps){
+void step_close(){
 
   /* Closes the door
    * Same as step_open(), but with backward, instead of forward. Could probably make this one function to be more efficient
    */
+   int numberOfSteps = numberofstepstoopendoor;
+  step_OFF();         //turning all coils off
+  while(numberOfSteps>0){
+    forward();        //going forward
+    numberOfSteps -- ;
+  }
 }
 
 //ULTRASONIC
@@ -80,4 +112,7 @@ bool is_mag (){
    *  Depending on how the magnetometer works for us, we may change what this function does.
    *  Could end up being some sort of get_mag_distance()  Annie?   */
 }
+
+
+
 
