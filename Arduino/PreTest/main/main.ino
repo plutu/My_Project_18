@@ -1,5 +1,7 @@
 #include <StepperAK.h>
 #include <AFMotor.h>
+#include <list>
+
 
   AF_DCMotor motor1(1);//forward/backward
   AF_DCMotor motor2(2);//sideways
@@ -26,10 +28,14 @@
   int wheel_speed = 50; //in cm/s, to be experimentally measured if possible?? This will change when we change motor_speed
   int linetime = linewidth/wheel_speed;
   bool has_mag = false;
-  
+
+
+  const int trigPin = A2; //Is trigpin what sends out the signal?
+  const int echoPin = A1;//and echopin what receives it?
 void setup() {
-  // put your setup code here, to run once:
-  
+  //ultrasonic setup
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
  
 }
 

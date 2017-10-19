@@ -39,7 +39,7 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
    *    runtime (ms)
    */ 
   motor1.setSpeed(motor_speed);//speed
-  motor2.setSpeed(motor_speed);
+  motor2.setSpeed(motor_speedl);
   motor1.run(dir);
   motor2.run(dir);
   delay(runtime);       // Yo whats this delay(runtime) doing? why we wanna do this?
@@ -53,8 +53,8 @@ void dc_move(AF_DCMotor motor1,AF_DCMotor motor2, char dir, int runtime){
  */
  
 void dc_go(AF_DCMotor A, AF_DCMotor B, char dir){
-  A.setSpeed(motor_speed);
-  B.setSpeed(motor_speed);
+  A.setSpeed(255);
+  B.setSpeed(255);
   A.run(dir);
   B.run(dir);
 }
@@ -105,7 +105,27 @@ int get_distance(){
   /* Calculates the distance to nearest object based on ultrasonic readings
    *  Returns an integer
    */
+  int readings[5];
+  sum=0
+  for (int reading = 0; reading < 5; reading +=1){
+    digitalWrite(trigPin, LOW);
+    delayMicroseconds(2);
+    digitalWrite(trigPin, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(trigPin, LOW);  
+    duration = pulseIn(echoPin, HIGH);
+    distance = duration/58.2;
+    readings[reading] = distance
+    sum += distance
+  }
+  for (int reading = 0; reading<5; reading+=1){
+    if (reading - (sum/size(readings)) > 20){
+      
+    }
+  }
 }
+
+
 
 bool is_mag (){
   /* Returns true if nearest object is magnetic, false otherwise.
