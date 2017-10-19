@@ -120,7 +120,13 @@ int get_distance(){
   }
   for (int reading = 0; reading<5; reading+=1){
     if (reading - (sum/size(readings)) > 20){
-      
+      {
+			for(int j=reading; j<(4); j++)
+			{
+				readings[j]=readings[j+1];
+			}
+			break;
+       
     }
   }
 }
