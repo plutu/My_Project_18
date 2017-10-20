@@ -1,6 +1,8 @@
 #include <StepperAK.h>
 #include <AFMotor.h>
-#include <list>
+#include <Wire.h> //I2C Arduino Library
+
+#define address 0x1E //0011110b, I2C 7bit address of HMC5883
 
 
   AF_DCMotor motor1(1);//forward/backward
@@ -22,7 +24,7 @@
   int pausetime = 100; //this is how long we wait in between ultrasonic measurements
   int linewidth = 10; //in cm, this is how far we advance per line
   int linesdone = 0;
-  int numberofstepstoopendoor = 90; //need to test this experimentally
+  int numberofstepstoopendoor = 50; //need to test this experimentally
   int collect_time = 50; //the time it takes to move forward enough to collect a magnet
   int motor_speed = 100; //between 0 and 255
   int wheel_speed = 50; //in cm/s, to be experimentally measured if possible?? This will change when we change motor_speed
@@ -36,11 +38,22 @@ void setup() {
   //ultrasonic setup
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
- 
+
+ //Initialize Serial and I2C communications
+  Wire.begin();
+  
+  //Put the HMC5883 IC into the correct operating mode
+  Wire.beginTransmission(address); //open communication with HMC5883
+  Wire.write(0x02); //select mode register
+  Wire.write(0x00); //continuous measurement mode
+  Wire.endTransmission();
 }
 
 void loop() {
-  linesdone+=1
+// test mag
+
+ 
+  linesdone+=1;
   strip(FORWARD);//left first, then right
   strip(BACKWARD); //make sure that we end up on the right hand edge, so that we don't get stuck around the corner.
   if (has_mag = true){
@@ -54,7 +67,7 @@ void loop() {
     dc_move(motor1, motor3, FORWARD, linetime);
   }
   else{
-    dc_move(motor1, motor3, BACKWARD, linetime*2)
+    dc_move(motor1, motor3, BACKWARD, linetime*2);
   }
 }
 
