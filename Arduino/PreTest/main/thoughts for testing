@@ -1,0 +1,10 @@
+Things to test tomorrow: (22/10/17)
+
+I think strip() needs to be better written perhaps. I tried fixing it, but it needs testing. Maybe comment out the rest of the nav
+alg. and see if we can get a single strip going.
+
+Need to test all those things in our declarations at the start of main.ino: for example, spin_180_time (see comments)
+
+Main priority: get pretest() working :)
+
+Sorry not to be there guys, I'll try and catch up on Monday.
