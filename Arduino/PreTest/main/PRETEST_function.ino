@@ -19,12 +19,12 @@ void pretest(){
   delay(10000);
   
   //detect magnetic target
-  if( is_mag() = true){
+  if( is_mag() == true){
     step_open();
     step_close();
   }
   else{
-    dc_move(motor1, motor3, 1000)
+    dc_move(motor1, motor3, BACKWARD, 1000);
   }
 
   delay(5000);
@@ -33,7 +33,7 @@ void pretest(){
   collect();
   
   //dump target
-  dump()
+  dump();
   
 }
 

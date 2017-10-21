@@ -9,6 +9,7 @@ void strip(char dir) {
       if (is_mag() == true) {
         collect();
       }
+      dc_go(motor2, motor4, dir);
       delay(pausetime);
     }
     howfarwevecome += pausetime;
