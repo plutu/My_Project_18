@@ -26,7 +26,8 @@
   int linesdone = 0;
   int numberofstepstoopendoor = 50; //need to test this experimentally
   int collect_time = 50; //the time it takes to move forward enough to collect a magnet
-  int motor_speed = 100; //between 0 and 255
+  int spin_180_time = 200; // time it takes to do a 180 --> again, measure experimentally
+  int motor_speed = 150; //between 0 and 255
   int wheel_speed = 50; //in cm/s, to be experimentally measured if possible?? This will change when we change motor_speed
   int linetime = linewidth/wheel_speed;
   bool has_mag = false;
@@ -39,7 +40,7 @@ void setup() {
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
 
- //Initialize Serial and I2C communications
+ //Initialize Serial and I2C communications for magno
   Wire.begin();
   
   //Put the HMC5883 IC into the correct operating mode

@@ -73,11 +73,12 @@ void dc_spin(AF_DCMotor motor1, AF_DCMotor motor2, int angle) {
       MAKE SURE YOU CHOOSE motor1 AND motor2 SUCH THAT SPIN WILL OCCUR IN THE DESIRED DIRECTION
       (are there ways to incorporate that^ in the parameters?
   */
+  int spin_time = spin_180_time * angle / 180;
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
   motor1.setSpeed(80);
   motor2.setSpeed(80);
-  delay(500);
+  delay(spin_time);
   motor1.setSpeed(0);
   motor2.setSpeed(0);
 }
