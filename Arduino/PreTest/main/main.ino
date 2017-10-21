@@ -48,10 +48,14 @@ void setup() {
   Wire.write(0x02); //select mode register
   Wire.write(0x00); //continuous measurement mode
   Wire.endTransmission();
+
+  //Pre-test --- hold up a piece of paper to block the ultrasonic sensor, then press reset button
+  if (get_distance() <5){
+    pretest();
+  }
 }
 
 void loop() {
-// test mag
 
  
   linesdone+=1;
