@@ -179,13 +179,13 @@ bool is_mag () {
 bool are_we_home() {
   //true if we're at base, false if not
    
-   int analog_ip = A0;   // select the input pin Photo Diode.
+   int analog_ip = A3;   // select the input pin Photo Diode.
    int inputVal = 0;     // to store photo diode input
 
 
 void setup() {
   Serial.begin(9600);   // Setup Serial Communication.               
-  Serial.print("ROBO INDIA\nroboindia.com\nTutorial on Analog IR Sensor.\n");  
+  
 }
 
 void loop(){
