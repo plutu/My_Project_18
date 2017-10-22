@@ -197,7 +197,7 @@ void loop(){
         delay(500);                   // Waiting for a while.
    if inputVal //some condition we need to test today 
       true;
-   else if inputVal 
+   else if inputVal //some condition that needs to be tested 
       false;
 
   
