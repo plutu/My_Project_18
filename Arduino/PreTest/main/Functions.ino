@@ -54,8 +54,8 @@ void dc_move(AF_DCMotor motor1, AF_DCMotor motor2, char dir, int runtime) {
 */
 
 void dc_go(AF_DCMotor A, AF_DCMotor B, char dir) {
-  A.setSpeed(255);
-  B.setSpeed(255);
+  A.setSpeed(motor_speed);
+  B.setSpeed(motor_speed);
   A.run(dir);
   B.run(dir);
 }
@@ -73,12 +73,12 @@ void dc_spin(AF_DCMotor motor1, AF_DCMotor motor2, int angle) {
       MAKE SURE YOU CHOOSE motor1 AND motor2 SUCH THAT SPIN WILL OCCUR IN THE DESIRED DIRECTION
       (are there ways to incorporate that^ in the parameters?
   */
-  int spin_time = spin_180_time * angle / 180;
+  int spin_time = (spin_180_time * angle) / 180;
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
-  motor1.setSpeed(80);
-  motor2.setSpeed(80);
-  delay(spin_time);
+  motor1.setSpeed(motor_speed);
+  motor2.setSpeed(motor_speed);
+  delay(spin_180_time);
   motor1.setSpeed(0);
   motor2.setSpeed(0);
 }
@@ -104,7 +104,7 @@ void step_close() {
   int numberOfSteps = numberofstepstoopendoor;
   step_OFF();         //turning all coils off
   while (numberOfSteps > 0) {
-    forward();        //going forward
+    backward();        //going forward
     numberOfSteps -- ;
   }
 }
@@ -139,6 +139,8 @@ int get_distance() {
       }
     }
   }
+  return sum/5;
+  
 }
 
 
@@ -166,43 +168,16 @@ bool is_mag () {
     y |= Wire.read(); //Y lsb
   }
 
-  if (x > 200 && y > 200 && z > 200 || x < -200 && y < -200 && z < -200 ) {
+  if (x>-800){//assuming sensing in only x direction
     true;
   }
 
-
-  delay(250);
 }
 
 
 
 bool are_we_home() {
   //true if we're at base, false if not
-   
-   int analog_ip = A3;   // select the input pin Photo Diode.
-   int inputVal = 0;     // to store photo diode input
-
-
-void setup() {
-  Serial.begin(9600);   // Setup Serial Communication.               
-  
-}
-
-void loop(){
-    inputVal = analogRead(analog_ip); // Reading and storing analog input value.
-
-        Serial.print("Input Value:");
-        Serial.print(inputVal);       // Printing Analog input value of Photo Diode.
-        Serial.print("\n");           // moving to new line
-        delay(500);                   // Waiting for a while.
-   if inputVal //some condition we need to test today 
-      true;
-   else if inputVal //some condition that needs to be tested 
-      false;
-
-  
-  
-}
 }
 
 
