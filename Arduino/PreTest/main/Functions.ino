@@ -169,7 +169,7 @@ bool is_mag () {
   }
 
   if (x>-800){//assuming sensing in only x direction
-    true;
+    return true;
   }
 
 }
