@@ -1,0 +1,8 @@
+getdistance()
+
+ take a bunch of measurements
+ if outlier - reject
+ 
+ if not, return average distance
+ 
+ 
