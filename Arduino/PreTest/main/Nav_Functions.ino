@@ -25,11 +25,13 @@ void backtobase(int lines) { //do we even need this function?
 
 void dump() {
   //QUESTION: Should we add the are_we_home() if statement here? What if we're not home?
-  dc_spin(motor2, motor4, 180); //doesn't matter which two motors, really
+  dc_spin(motor2, motor4); //doesn't matter which two motors, really
+  dc_spin(motor2, motor4);
   step_open();
   dc_move(motor1, motor3, BACKWARD, linetime);
   step_close();
-  dc_spin(motor2, motor4, 180);
+  dc_spin(motor4, motor2);
+  dc_spin(motor4, motor2);
 }
 
 void collect() {  //collects and returns to its place

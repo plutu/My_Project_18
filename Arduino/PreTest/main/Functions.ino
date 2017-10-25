@@ -44,8 +44,8 @@ void dc_move(AF_DCMotor motor1, AF_DCMotor motor2, char dir, int runtime) {
   motor1.run(dir);
   motor2.run(dir);
   delay(runtime);       // Yo whats this delay(runtime) doing? why we wanna do this?
-  motor1.setSpeed(0);  //Q: Do we want the motor to run continuously until we tell it to stop,
-  motor2.setSpeed(0);  //    or do we want it to go a certain distance then stop?
+  motor1.run(RELEASE);  //Q: Do we want the motor to run continuously until we tell it to stop,
+  motor2.run(RELEASE);  //    or do we want it to go a certain distance then stop?
   delay(500);
 }
 
@@ -61,26 +61,24 @@ void dc_go(AF_DCMotor A, AF_DCMotor B, char dir) {
 }
 
 void dc_stop(AF_DCMotor A, AF_DCMotor B) {
-  A.setSpeed(0);
-  B.setSpeed(0);
+  A.run(RELEASE);
+  B.run(RELEASE);
 }
 
-void dc_spin(AF_DCMotor motor1, AF_DCMotor motor2, int angle) {
+void dc_spin(AF_DCMotor motor1, AF_DCMotor motor2) {
   /*Powers two opposite motors in opposite directions
      Parameters:
         motor1, motor2 : AF_DCMotor objects
-        angle: angle at which we want to turn
       MAKE SURE YOU CHOOSE motor1 AND motor2 SUCH THAT SPIN WILL OCCUR IN THE DESIRED DIRECTION
       (are there ways to incorporate that^ in the parameters?
   */
-  int spin_time = (spin_180_time * angle) / 180;
   motor1.run(FORWARD);
   motor2.run(BACKWARD);
   motor1.setSpeed(motor_speed);
   motor2.setSpeed(motor_speed);
-  delay(spin_180_time);
-  motor1.setSpeed(0);
-  motor2.setSpeed(0);
+  delay(spin_90_time);
+  motor1.run(RELEASE);
+  motor2.run(RELEASE);
 }
 
 //STEPPER
@@ -115,32 +113,41 @@ int get_distance() {
       Returns an integer
   */
   int readings[5];
+  int num = 5;
   int sum = 0;
-  for (int reading = 0; reading < 5; reading += 1) {
-    digitalWrite(trigPin, LOW);
-    delayMicroseconds(2);
-    digitalWrite(trigPin, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(trigPin, LOW);
-    int duration = pulseIn(echoPin, HIGH);
-    int distance = duration / 58.2;
-    readings[reading] = distance;
-    sum += distance;
-  }
-  for (int reading = 0; reading < 5; reading += 1) {
-    if (reading - (sum / 5 > 20)) {
-      {
-        for (int j = reading; j < (4); j++)
-        {
-          readings[j] = readings[j + 1];
-        }
-        break;
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  int duration = pulseIn(echoPin, HIGH);
+  int distance = duration / 58.2;
+  //  for (int reading = 0; reading < 5; reading += 1) {
+  //    digitalWrite(trigPin, LOW);
+  //    delayMicroseconds(2);
+  //    digitalWrite(trigPin, HIGH);
+  //    delayMicroseconds(10);
+  //    digitalWrite(trigPin, LOW);
+  //    int duration = pulseIn(echoPin, HIGH);
+  //    int distance = duration / 58.2;
+  //    readings[reading] = distance;
+  //    sum += distance;
+  //  }
+  //  for (int reading = 0; reading < num; reading += 1) {
+  //    if (reading - (sum / num > 20)) {
+  //      {
+  //        for (int j = reading; j < (4); j++)
+  //        {
+  //          readings[j] = readings[j + 1];
+  //        }
+  //        num -= 1;
+  //
+  //
+  //      }
+  //    }
+  //  }
+  return distance;
 
-      }
-    }
-  }
-  return sum/5;
-  
 }
 
 
@@ -168,8 +175,11 @@ bool is_mag () {
     y |= Wire.read(); //Y lsb
   }
 
-  if (x>-800){//assuming sensing in only x direction
+  if (x > -700) { //assuming sensing in only x direction
     return true;
+  }
+  else {
+    return false;
   }
 
 }
