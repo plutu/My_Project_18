@@ -5,7 +5,7 @@ void strip(char dir) {
   
   dc_go(motor2, motor4, dir);
   while (currentTravelTime < sidewaysTime) {
-    if (get_distance() < nextLineTime) {
+    if (get_distance() < lineWidth) {
       dc_stop(motor2, motor4);
       if (is_mag() == true) {
         collect();
@@ -23,7 +23,7 @@ void dump() {
   dc_spin(motor2, motor4); 
   dc_spin(motor2, motor4); 
   step_open();
-  dc_move(motor1, motor3, BACKWARD, 500);
+  dc_move(motor1, motor3, BACKWARD, nextLineTime);
   step_close();
   dc_spin(motor2, motor4);
   dc_spin(motor2, motor4);
@@ -36,4 +36,3 @@ void collect() {  //collects and returns to its place
   dc_move(motor1, motor3, BACKWARD, nextLineTime);
 
 }
-

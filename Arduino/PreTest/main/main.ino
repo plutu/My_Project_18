@@ -24,19 +24,18 @@ const int echoPin = A1;
 
 const int sidewaysTime = 6000; // (ms) time takes to travel a bit over 1.2m
 const int nextLineTime = 2000; //ms
-const int spinTime = 960; // (ms) time it takes to do a right angle spin
+const int lineWidth = 15; //cm, the distance we hope to cover in nextLineTime
+const int spinTime = 920; // (ms) time it takes to do a right angle spin
 
 const int ultraSonicDelay = 100; // (ms) interval between ultrasonic measurements
-const int doorSteps = 100; // ms
+const int doorSteps = 100; // number of steps to open door using stepper
 
 //global variables
 int linesDone = 0;
-int magnetic = false;
+bool  tagetCollected = false; //ellen, you had this as int, why?
 
 //idk if this is a constant or a variable?? 
-int motorSpeed = 255; //between 0 and 255
-
-
+int motorSpeed = 100; //between 0 and 255
 
 void setup() {
   //ultrasonic setup
@@ -48,6 +47,8 @@ void setup() {
   pinMode(pin2, OUTPUT); 
   pinMode(pin3, OUTPUT); 
   pinMode(pin4, OUTPUT);
+ 
+  //SDA: A4, SCL:A5
 
   //Initialize Serial and I2C communications for magno
   Wire.begin();
@@ -58,37 +59,31 @@ void setup() {
   Wire.write(0x00); //continuous measurement mode
   Wire.endTransmission();
 
+  //delay before starting pretest;
+  delay(900);
 
   //Pre-test --- hold up a piece of paper to block the ultrasonic sensor, then press reset button
 
-/*
+
   delay(500);
-  if (get_distance() < 10) {
+  if (get_distance() < 5) {
     pretest();
+
   }
- */
-
-
   //delay before starting main loop
-  delay(5000);
-
-  //dc_move2(FORWARD, 3000);
-  //dc_move2(BACKWARD, 3000);
-  
+  delay(5000); 
 }
 
 void loop() {
-  
-
    linesDone+=1;
    strip(FORWARD);//left first, then right
   strip(BACKWARD); //make sure that we end up on the right hand edge, so that we don't get stuck around the corner.
-  if (magnetic = true){
+  if (targetCollected = true){
       dc_move(motor1, motor3, BACKWARD, linesDone*nextLineTime);
       dump(); //dump should include spinning, opening door, reversing, closing door, then spinning again
       dc_move(motor1, motor3, FORWARD, linesDone*nextLineTime);
    }
-   else if (get_distance() > nextLineTime){
+   else if (get_distance() > lineWidth){
       dc_move(motor1, motor3, FORWARD, nextLineTime);
    }
   else{
@@ -97,4 +92,3 @@ void loop() {
 
 
 }
-
