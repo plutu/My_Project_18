@@ -1,0 +1,18 @@
+Shift left, shift right until target within 3 grids
+if target within 3 grids:
+  go(3 grids)
+  collect()
+  reverse(3 grids)
+  spin(180)
+  dump()
+  spin(180)
+  go (3 grids)
+  
+  
+else:
+  go (3 grids)
+  
+repeat
+
+
+(not exactly, update pls)
