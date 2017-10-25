@@ -175,7 +175,7 @@ bool is_mag () {
     y |= Wire.read(); //Y lsb
   }
 
-  if (x > -700) { //assuming sensing in only x direction
+  if (x > -800) { //assuming sensing in only x direction
     return true;
   }
   else {

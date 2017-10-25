@@ -25,8 +25,8 @@ int linewidth = 10; //in cm, this is how far we advance per line
 int linesdone = 0;
 int numberofstepstoopendoor = 100; //need to test this experimentally
 int collect_time = 2000; //the time it takes to move forward enough to collect a magnet
-int spin_90_time = 960; // time it takes to do a 180 --> again, measure experimentally
-int motor_speed = 255; //between 0 and 255
+int spin_90_time = 920; // time it takes to do a 180 --> again, measure experimentally
+int motor_speed = 100; //between 0 and 255
 int wheel_speed = 50; //in cm/s, to be experimentally measured if possible?? This will change when we change motor_speed
 int linetime = 2000;  // linewidth / wheel_speed;
 bool has_mag = false;
@@ -45,6 +45,8 @@ void setup() {
   pinMode(pin3, OUTPUT);
   pinMode(pin4, OUTPUT);
 
+  //SDA: A4, SCL:A5
+
   //Initialize Serial and I2C communications for magno
   Wire.begin();
 
@@ -58,39 +60,33 @@ void setup() {
 
   //Pre-test --- hold up a piece of paper to block the ultrasonic sensor, then press reset button
 
-  /*
-    delay(500);
-    if (get_distance() < 1) {
+
+  delay(500);
+  if (get_distance() < 5) {
     pretest();
 
-  */
+  }
 
 }
 
 void loop() {
- if (is_mag==true){
-  collect();
-  dump(); 
- }
- else{
-  dc_move(motor1, motor3, FORWARD, 50);
- }
-//    
-//    linesdone += 1;
-//    strip(FORWARD);//left first, then right
-//    strip(BACKWARD); //make sure that we end up on the right hand edge, so that we don't get stuck around the corner.
-//    if (has_mag = true) {
-//      backtobase(linesdone);
-//      dump(); //dump should include spinning, opening door, reversing, closing door, then spinning again
-//      /*GENIUS: we can make the reverse part of dump exactly linewidth, which will mean that when we go back to the frontlines
-//        we'll be one line further forward */
-//      dc_move(motor1, motor3, FORWARD, linesdone * linetime);
-//    }
-//    else if (get_distance() > linewidth) {
-//      dc_move(motor1, motor3, FORWARD, linetime);
-//    }
-//    else {
-//      dc_move(motor1, motor3, BACKWARD, linetime * 2);
-//    }
+
+
+  linesdone += 1;
+  strip(FORWARD);//left first, then right
+  strip(BACKWARD); //make sure that we end up on the right hand edge, so that we don't get stuck around the corner.
+  if (has_mag = true) {
+    backtobase(linesdone);
+    dump(); //dump should include spinning, opening door, reversing, closing door, then spinning again
+    /*GENIUS: we can make the reverse part of dump exactly linewidth, which will mean that when we go back to the frontlines
+      we'll be one line further forward */
+    dc_move(motor1, motor3, FORWARD, linesdone * linetime);
+  }
+  else if (get_distance() > linewidth) {
+    dc_move(motor1, motor3, FORWARD, linetime);
+  }
+  else {
+    dc_move(motor1, motor3, BACKWARD, linetime * 2);
+  }
 }
 
